@@ -45,6 +45,7 @@ export function handle(i18next, options = {}) {
     // assert for res -> template
     if (res.locals) {
       res.locals.t = t;
+      if (i18n._) res.locals._ = i18n._; // for use with i18next-text
       res.locals.exists = exists;
       res.locals.i18n = i18n;
       res.locals.language = lng;
