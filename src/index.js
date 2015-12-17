@@ -25,6 +25,12 @@ export function handle(i18next, options = {}) {
       return i18next.t(key, options);
     };
 
+    let _ = function(str, options) {
+      options = options || {};
+      options.lng = options.lng || req.lng;
+      return i18next._(str, options);
+    }
+
     let exists = function(key, options) {
       options = options || {};
       options.lng = options.lng || req.lng;
@@ -41,11 +47,12 @@ export function handle(i18next, options = {}) {
     // assert for req
     req.i18n = i18n;
     req.t = req.t || t;
+    req._ = req._ || _;
 
     // assert for res -> template
     if (res.locals) {
       res.locals.t = t;
-      if (i18n._) res.locals._ = i18n._; // for use with i18next-text
+      res.locals._ = _;
       res.locals.exists = exists;
       res.locals.i18n = i18n;
       res.locals.language = lng;
